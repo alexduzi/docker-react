@@ -1,0 +1,21 @@
+FROM node:lts-alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+
+RUN npm config set registry http://registry.npmjs.org/ --global
+
+RUN npm config set  https-proxy null
+
+RUN npm config set  proxy null
+
+RUN npm config set strict-ssl false
+
+RUN npm set maxsockets 3
+
+RUN npm install --force --verbose
+
+COPY . .
+
+CMD [ "npm", "run", "start" ]
